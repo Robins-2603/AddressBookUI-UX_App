@@ -23,3 +23,12 @@ const phoneNumber=document.querySelector('#tel');
             numberError.textContent="";
             else numberError.textContent="Phone number is Incorrect!";
         });
+
+// uc6
+const save = () => {
+    try{
+        let addressBookData = createAddressBook();
+    }catch (e){
+        return;
+        }
+    }
