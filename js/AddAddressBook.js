@@ -1,3 +1,4 @@
+window.addEventListener('DOMContentLoaded', (event) => {
 const nam=document.querySelector('#name');
     const nameError=document.querySelector('.name-error');
         nam.addEventListener('input',function(){
@@ -23,6 +24,7 @@ const phoneNumber=document.querySelector('#tel');
             numberError.textContent="";
             else numberError.textContent="Phone number is Incorrect!";
         });
+    });    
 
 // uc6
 const save = () => {
@@ -31,4 +33,53 @@ const save = () => {
     }catch (e){
         return;
         }
+    }
+    // uc8
+    function createAndUpdateStorage(addressBookData){
+        let addressBookList=JSON.parse(localStorage.getItem("AddressBookList"));
+        if(addressBookList !=undefined){
+            addressBookList.push(addressBookData);
+        }else{
+            addressBookList=[addressBookData]
+        }
+        alert(addressBookList.toString());
+        localStorage.setItem("AddressBookList", JSON.stringify(addressBookList))
+    }
+    const createAddressBook=()=>{
+        let addressBook=new AddressBook();
+        try{
+            addressBook.name=getInputValueById('#name');
+       }catch (e){
+            setTextValue('.name-error',e);
+            throw e;
+        }
+        try{
+            addressBook.address=getInputValueById('#address');
+        }catch (e){
+            setTextValue('.address-error',e);
+            throw e;
+        }
+        addressBook.city=getInputValueById('[name=city]');
+        addressBook.state=getInputValueById('[name=state]');
+        addressBook.zip=getInputValueById('#zip');
+        try{
+            addressBook.phoneNumber=getInputValueById('#phone');
+        }catch (e){
+            setTextValue('.number-error', e);
+            throw e;
+        }
+        alert(addressBook.toString());
+        return addressBook;
+    }
+    const getInputValueById=(id)=>{
+        let value=document.querySelector(id).value;
+        return value;
+    }
+    const getSelectedValues=(propertyValue)=>{
+        let allItems=document.querySelectorAll(propertyValue);
+        let setItems= [];
+        allItems.forEach(item =>{
+            if(item.checked) setItems.push(item.value);
+        });
+        return setItems;
     }
